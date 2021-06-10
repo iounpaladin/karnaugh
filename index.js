@@ -87,6 +87,40 @@ function calculateCircuit(circuit, a, b, c, d) {
     }
 }
 
+function starPotentialToNotPotential(x) {
+    return x.length > 1 ? { not: x[0] } : x[0];
+}
+
+function providerToCircuit(provider) {
+    const chosen = [];
+
+    for (let i = 0; i < 4; i++) {
+        if (provider.implicant[i] !== '*') {
+            chosen.push(`${"ABCD"[i]}${provider.implicant[i] === '1' ? '' : '*'}`);
+        }
+    }
+
+    if(chosen.length === 1) {
+        return starPotentialToNotPotential(chosen[0]);
+    } else if (chosen.length === 2) {
+        return { and: [ starPotentialToNotPotential(chosen[0]), starPotentialToNotPotential(chosen[1]) ] };
+    } else if (chosen.length === 3) {
+        return { and: [ starPotentialToNotPotential(chosen[0]), { and: [ starPotentialToNotPotential(chosen[1]), starPotentialToNotPotential(chosen[2]) ] } ] };
+    } else if (chosen.length === 4) {
+        return { and: [ starPotentialToNotPotential(chosen[0]), { and: [ starPotentialToNotPotential(chosen[1]), { and: [ starPotentialToNotPotential(chosen[2]), starPotentialToNotPotential(chosen[3]) ] } ] } ] };
+    }
+}
+
+function providersToCircuit(chosenProviders) {
+    let circuit = providerToCircuit(chosenProviders[0]);
+
+    for (const provider of chosenProviders.slice(1)) {
+        circuit = { or: [ providerToCircuit(provider), circuit ] };
+    }
+
+    return circuit;
+}
+
 function parseCircuit() {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext('2d');
@@ -346,6 +380,14 @@ function parseCircuit() {
     const karnaughReducedDisjunctiveNormalForm = chosenProviders.map(x => toFormat(x.implicant)).join(' \\vee ');
     document.getElementById("reduced").innerText = "Karnaugh-reduced Disjunctive Normal Form: \\(" + karnaughReducedDisjunctiveNormalForm + "\\)";
     MathJax.typeset();
+
+    const c2 = document.getElementById("reduced2");
+    const ctx2 = c2.getContext('2d');
+    ctx2.clearRect(0, 0, c2.width, c2.height);
+
+    const circuit2 = providersToCircuit(chosenProviders);
+
+    render(ctx2, circuit2, c2.width / 4 * 3, Math.min(depthOf(circuit2) - 5, 0) * Math.min(depthOf(circuit2) - 6, 0) * 25 + 50 + y, depthOf(circuit2) - 3);
 }
 
 function drawImageAt(ctx, src, x, y) {
