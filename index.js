@@ -170,7 +170,7 @@ function parseCircuit() {
 
     const x = 500;
     const y = 300;
-    render(ctx, circuit, x, y, depthOf(circuit) - 3);
+    render(ctx, circuit, x, y, depthOf(circuit) - 2);
     wireTo(ctx, x + 100, y + 25, x + 150, y + 25);
     ctx.fillText("out", x + 150, y + 25);
 
@@ -387,7 +387,7 @@ function parseCircuit() {
 
     const circuit2 = providersToCircuit(chosenProviders);
 
-    render(ctx2, circuit2, c2.width / 4 * 3, Math.min(depthOf(circuit2) - 5, 0) * Math.min(depthOf(circuit2) - 6, 0) * 25 + 50 + y, depthOf(circuit2) - 3);
+    render(ctx2, circuit2, c2.width - 100,c2.width / 2,depthOf(circuit2) - 3);
 }
 
 function drawImageAt(ctx, src, x, y) {
