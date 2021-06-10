@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logic Circuits</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        #karnaugh > tr > td {
+            background-color: rebeccapurple;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div id="input">
+        <label>
+            \( f(A, B, C, D) = \)
+            <input type="text" id="circuit">
+        </label>
+        <input type="submit" onclick="parseCircuit()">
+    </div>
+    <h1>Diagramme</h1>
+    <div id="draw">
+        <canvas id="canvas" width="1000px" height="600px">
+
+        </canvas>
+    </div>
+    <h1>Truth Table</h1>
+    <div id="tables">
+        <table class="w3-table w3-striped" id="data">
+            <tr><th scope="col">\(A\)</th><th scope="col">\(B\)</th><th scope="col">\(C\)</th><th scope="col">\(D\)</th><th scope="col">\(f(A,B,C,D)\)</th></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td></td></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>1</td><td></td></tr>
+            <tr><td>0</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+            <tr><td>0</td><td>0</td><td>1</td><td>1</td><td></td></tr>
+            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td></td></tr>
+            <tr><td>0</td><td>1</td><td>0</td><td>1</td><td></td></tr>
+            <tr><td>0</td><td>1</td><td>1</td><td>0</td><td></td></tr>
+            <tr><td>0</td><td>1</td><td>1</td><td>1</td><td></td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>0</td><td></td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td></td></tr>
+            <tr><td>1</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+            <tr><td>1</td><td>0</td><td>1</td><td>1</td><td></td></tr>
+            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td></td></tr>
+            <tr><td>1</td><td>1</td><td>0</td><td>1</td><td></td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>0</td><td></td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>1</td><td></td></tr>
+        </table>
+        <h1>Karnaugh Map</h1>
+        <table class="w3-table w3-striped" id="karnaugh">
+            <tr><th scope="col">\( CD \) \ \( AB \)</th><th scope="col">\(00\)</th><th scope="col">\(01\)</th><th scope="col">\(10\)</th><th scope="col">\(11\)</th></tr>
+            <tr><th scope="row">\(00\)</th><td></td><td></td><td></td><td></td></tr>
+            <tr><th scope="row">\(01\)</th><td></td><td></td><td></td><td></td></tr>
+            <tr><th scope="row">\(10\)</th><td></td><td></td><td></td><td></td></tr>
+            <tr><th scope="row">\(11\)</th><td></td><td></td><td></td><td></td></tr>
+        </table>
+        <h1 id="reduced"></h1>
+    </div>
+</div>
+</body>
+
+<script src="./index.js"></script>
+</html>
